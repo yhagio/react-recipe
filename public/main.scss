@@ -1,8 +1,26 @@
-html,
+html {
+  height: 100%;
+}
 body {
-  background: red;
+  height: 100%;
+  background: linear-gradient(#fff, skyblue);
 }
 
 h1 {
-  color: blue;
+  color: #aaa;
+}
+
+.container,
+.sub-container {
+  height: 100%;
+}
+
+.modal-wrapper {
+  position: absolute;
+/*  height: 100%;
+  width: 100%;*/
+}
+
+.delete-btn {
+  margin-right: 10px;
 }

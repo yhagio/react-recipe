@@ -1,27 +1,6 @@
 import React, {Component} from 'react';
 
-class AddRecipeForm extends Component {
-  handleAddRecipe(e){
-    e.preventDefault();
-
-    let title = this.refs.title.value.trim();
-    let ingredients = this.refs.ingredients.value.trim();
-    let ingredientsArray = ingredients.split(',');
-    ingredientsArray.map(function(a) {
-      return a.trim();
-    });
-
-    let recipeObject = {
-      title: title,
-      ingredients: ingredientsArray
-    };
-
-    this.props._handleAddRecipe(recipeObject);
-
-    this.refs.title.value = "";
-    this.refs.ingredients.value = ""
-    this.props.onClose.bind(this);
-  }
+class EditRecipeForm extends Component {
 
   render() {
     const { show } = this.props;
@@ -40,13 +19,14 @@ class AddRecipeForm extends Component {
 
             <div className="modal-header">
               <button onClick={this.props.onClose} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">Add Recipe</h4>
+              <h4 className="modal-title">Edit Recipe</h4>
             </div>
 
             <div className="modal-body">
 
-              <form className="form-horizontal" role="form"
-              onSubmit={this.handleAddRecipe.bind(this)}>
+              <form 
+                className="form-horizontal"
+                role="form">
                 <div className="form-group">
                   <label  className="col-sm-2 control-label" 
                   htmlFor="title">Title</label>
@@ -56,6 +36,7 @@ class AddRecipeForm extends Component {
                       type="text" 
                       className="form-control" 
                       id="title"
+                      value={this.props.data.title}
                       placeholder="Title"/>
                   </div>
                 </div>
@@ -71,15 +52,17 @@ class AddRecipeForm extends Component {
                       type="textarea"
                       className="form-control" 
                       id="Ingredients"
+                      value={this.props.data.ingredients.join(',')}
                       placeholder="Ingredients. Separate them by comma."/>
                   </div>
                 </div>
+                
                 <div className="form-group">
                   <div className="col-sm-offset-2 col-sm-10">
                     <button
                       onClick={this.props.onClose}
                       type="submit"
-                      className="btn btn-success">Add Recipe</button>
+                      className="btn btn-success">Finish Edit</button>
                   </div>
                 </div>
               </form>
@@ -93,6 +76,6 @@ class AddRecipeForm extends Component {
   }
 };
 
-export default AddRecipeForm;
+export default EditRecipeForm;
 
 

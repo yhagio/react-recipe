@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import RecipeDetail from './RecipeDetail';
 
 class RecipeList extends Component{
   constructor() {
@@ -10,20 +11,28 @@ class RecipeList extends Component{
     this.setState({ mounted: true });
   }
 
+  deleteRecipe(id) {
+    this.props._removeRecipe(id);
+  }
+
+  editRecipe(id) {
+    console.log('id', id);
+    this.props._modifyRecipe(id);
+  }
+
   render(){
     let recipeNames = "";
     if(this.state.mounted){
-      
       if(this.props.recipes.length === 0) {
-        recipeNames = <li><h4>No recipe yet</h4></li>;
+        recipeNames = <h4>* No recipe yet</h4>;
       } else {
         recipeNames = this.props.recipes.map((data, index) => {
-          return (
-            <li key={index}>
-              <p><strong>{data.title}</strong></p>
-              <p>{data.ingredients}</p>
-            </li>
-          );
+          return <RecipeDetail 
+            item={data}
+            key={index}
+            id={index}
+            _deleteRecipe={this.deleteRecipe.bind(this)}
+            _editRecipe={this.editRecipe.bind(this)} />;
         });
       }
     }
@@ -31,12 +40,14 @@ class RecipeList extends Component{
     return (
       <div>
         <h3>Recipe List</h3>
-        <ul>
+        <div className="panel-group" id="accordion">
           {recipeNames}
-        </ul>
+        </div>
       </div>
     );
   }
 };
 
 export default RecipeList;
+
+
