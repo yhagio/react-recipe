@@ -1,6 +1,54 @@
 import React, {Component} from 'react';
 
 class EditRecipeForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+      ingredients: ''
+    };
+
+    this.changeTitle = this.changeTitle.bind(this);
+    this.changeIngredients = this.changeIngredients.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      title: this.props.data.title,
+      ingredients: this.props.data.ingredients.join(',')
+    });
+  }
+
+  handleEditRecipe(e){
+    e.preventDefault();
+
+    let ingredients = this.state.ingredients.trim();
+    let ingredientsArray = ingredients.split(',');
+    ingredientsArray.map(function(a) {
+      return a.trim();
+    });
+
+
+    let recipeObject = {
+      title: this.state.title,
+      ingredients: ingredientsArray
+    };
+
+    console.log('recipeObject:', recipeObject);
+    debugger;
+
+    this.props._handleEditRecipe(this.props.index, recipeObject);
+
+    this.props.onClose.bind(this);
+  }
+
+  changeTitle(e) {
+    this.setState({title: e.target.value});
+  }
+
+  changeIngredients(e) {
+    this.setState({ingredients: e.target.value});
+  }
 
   render() {
     const { show } = this.props;
@@ -26,17 +74,18 @@ class EditRecipeForm extends Component {
 
               <form 
                 className="form-horizontal"
-                role="form">
+                role="form"
+                onSubmit={this.handleEditRecipe.bind(this)}>
                 <div className="form-group">
                   <label  className="col-sm-2 control-label" 
                   htmlFor="title">Title</label>
                   <div className="col-sm-10">
                     <input 
-                      ref="title"
                       type="text" 
                       className="form-control" 
                       id="title"
-                      value={this.props.data.title}
+                      value={this.state.title}
+                      onChange={this.changeTitle}
                       placeholder="Title"/>
                   </div>
                 </div>
@@ -48,19 +97,18 @@ class EditRecipeForm extends Component {
                   Ingredients</label>
                   <div className="col-sm-10">
                     <input 
-                      ref="ingredients"
                       type="textarea"
                       className="form-control" 
                       id="Ingredients"
-                      value={this.props.data.ingredients.join(',')}
+                      value={this.state.ingredients}
+                      onChange={this.changeIngredients}
                       placeholder="Ingredients. Separate them by comma."/>
                   </div>
                 </div>
-                
+
                 <div className="form-group">
                   <div className="col-sm-offset-2 col-sm-10">
                     <button
-                      onClick={this.props.onClose}
                       type="submit"
                       className="btn btn-success">Finish Edit</button>
                   </div>

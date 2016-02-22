@@ -14,7 +14,8 @@ class App extends Component{
       editModalOpen: props.editOpened,
       buttonText: 'ADD RECIPE',
       recipes: [],
-      editingData: ''
+      editingData: '',
+      editingIndex: ''
     };
   }
 
@@ -47,13 +48,16 @@ class App extends Component{
   }
 
   editRecipe(index) {
-    console.log('edit', index, this.state.recipes[index]);
+    // console.log('edit', index, this.state.recipes[index]);
     let editingData = this.state.recipes[index];
+    // console.log(editingData);
+
     this.setState({
+      editingIndex: index,
       editingData: editingData
     });
 
-    console.log('Set EditingD', this.state.editingData);
+    // console.log('Set EditingD', this.state.editingData);
     const state = this.state.editModalOpen;
     this.setState({editModalOpen: !state});
   }
@@ -61,24 +65,35 @@ class App extends Component{
   closeEditModal() {
     const state = this.state.editModalOpen;
     this.setState({editModalOpen: !state});
+    this.setState({
+      editingIndex: '',
+      editingData: ''
+    });
   }
 
   editRecipeComplete(index, recipe) {
     let recipes = this.state.recipes;
     recipes[index] = recipe;
-    this.setState({ recipes });
+    this.setState({ recipes: recipes });
+    this.setState({
+      editingIndex: '',
+      editingData: ''
+    });
   }
 
   render(){
     let editForm = '';
     if (this.state.editingData !== '') {
-      console.log('DATA', this.state.editingData);
+      // console.log('DATA', this.state.editingData);
       editForm = <EditRecipeForm
           show={this.state.editModalOpen}
           onClose={this.closeEditModal.bind(this)}
-          data={this.state.editingData}>
+          data={this.state.editingData}
+          index={this.state.editingIndex}
+          _handleEditRecipe={this.editRecipeComplete.bind(this)}>
         </EditRecipeForm>;
     }
+
     return (
       <div className="sub-container">
         <button className="btn btn-info" onClick={this.toggleModal.bind(this)}>{this.state.buttonText}</button>
