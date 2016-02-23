@@ -11,6 +11,6 @@ Then run
 webpack
 ```
 
-
 ### Resources 
-- [React Modal](https://github.com/reactjs/react-modal)
+- [React.js Doc](https://facebook.github.io/react/docs/getting-started.html)
+- [Bootstrap Accordion](http://getbootstrap.com/javascript/#collapse-example-accordion)

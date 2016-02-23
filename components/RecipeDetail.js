@@ -26,7 +26,7 @@ class RecipeDetail extends Component {
           </h4>
         </div>
 
-        <div id={`recipe-${this.props.id}`} className="panel-collapse collapse in">
+        <div id={`recipe-${this.props.id}`} className="panel-collapse collapse">
           <div className="panel-body">
             <ul className="list-group">
               {this.props.item.ingredients.map((item, i) => {

@@ -76,6 +76,21 @@
 
 	__webpack_require__(163);
 
+	var recipeArray = [];
+
+	var sample = {
+	  title: 'Oyakodon',
+	  ingredients: ['Onions', 'Soy Sauce', 'Eggs', 'Chicken', 'Sugar', 'Sake', 'Rice']
+	};
+
+	var sample2 = {
+	  title: 'Katsudon',
+	  ingredients: ['Onions', 'Soy Sauce', 'Eggs', 'Pork', 'Sake', 'Mirin', 'Rice']
+	};
+
+	recipeArray.push(sample);
+	recipeArray.push(sample2);
+
 	var App = function (_Component) {
 	  _inherits(App, _Component);
 
@@ -88,7 +103,7 @@
 	      modalOpen: props.opened,
 	      editModalOpen: props.editOpened,
 	      buttonText: 'ADD RECIPE',
-	      recipes: [],
+	      recipes: recipeArray,
 	      editingData: '',
 	      editingIndex: ''
 	    };
@@ -118,6 +133,7 @@
 	      this.setState({
 	        recipes: allRecipes
 	      });
+	      localStorage.setItem('recipes', JSON.stringify(recipe));
 	    }
 	  }, {
 	    key: 'deleteRecipe',
@@ -131,16 +147,13 @@
 	  }, {
 	    key: 'editRecipe',
 	    value: function editRecipe(index) {
-	      // console.log('edit', index, this.state.recipes[index]);
 	      var editingData = this.state.recipes[index];
-	      // console.log(editingData);
 
 	      this.setState({
 	        editingIndex: index,
 	        editingData: editingData
 	      });
 
-	      // console.log('Set EditingD', this.state.editingData);
 	      var state = this.state.editModalOpen;
 	      this.setState({ editModalOpen: !state });
 	    }
@@ -170,7 +183,6 @@
 	    value: function render() {
 	      var editForm = '';
 	      if (this.state.editingData !== '') {
-	        // console.log('DATA', this.state.editingData);
 	        editForm = _react2.default.createElement(_EditRecipeForm2.default, {
 	          show: this.state.editModalOpen,
 	          onClose: this.closeEditModal.bind(this),
@@ -182,11 +194,6 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sub-container' },
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'btn btn-info', onClick: this.toggleModal.bind(this) },
-	          this.state.buttonText
-	        ),
 	        _react2.default.createElement(_AddRecipeForm2.default, {
 	          show: this.state.modalOpen,
 	          onClose: this.toggleModal.bind(this),
@@ -197,10 +204,19 @@
 	          null,
 	          'Recipe Book'
 	        ),
-	        _react2.default.createElement(_RecipeList2.default, {
-	          recipes: this.state.recipes,
-	          _removeRecipe: this.deleteRecipe.bind(this),
-	          _modifyRecipe: this.editRecipe.bind(this) })
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'well' },
+	          _react2.default.createElement(_RecipeList2.default, {
+	            recipes: this.state.recipes,
+	            _removeRecipe: this.deleteRecipe.bind(this),
+	            _modifyRecipe: this.editRecipe.bind(this) })
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-info', onClick: this.toggleModal.bind(this) },
+	          this.state.buttonText
+	        )
 	      );
 	    }
 	  }]);
@@ -19866,7 +19882,6 @@
 	  }, {
 	    key: 'editRecipe',
 	    value: function editRecipe(id) {
-	      // console.log('id', id);
 	      this.props._modifyRecipe(id);
 	    }
 	  }, {
@@ -19987,7 +20002,7 @@
 	        ),
 	        _react2.default.createElement(
 	          "div",
-	          { id: "recipe-" + this.props.id, className: "panel-collapse collapse in" },
+	          { id: "recipe-" + this.props.id, className: "panel-collapse collapse" },
 	          _react2.default.createElement(
 	            "div",
 	            { className: "panel-body" },
@@ -20279,9 +20294,6 @@
 	        ingredients: ingredientsArray
 	      };
 
-	      console.log('recipeObject:', recipeObject);
-	      debugger;
-
 	      this.props._handleEditRecipe(this.props.index, recipeObject);
 
 	      this.props.onClose.bind(this);
@@ -20452,7 +20464,7 @@
 
 
 	// module
-	exports.push([module.id, "html {\n  height: 100%; }\n\nbody {\n  height: 100%;\n  background: linear-gradient(#fff, skyblue); }\n\nh1 {\n  color: #aaa; }\n\n.container,\n.sub-container {\n  height: 100%; }\n\n.modal-wrapper {\n  position: absolute;\n  /*  height: 100%;\n  width: 100%;*/ }\n\n.delete-btn {\n  margin-right: 10px; }\n", ""]);
+	exports.push([module.id, "html {\n  min-height: 100%; }\n\nbody {\n  height: 100%;\n  background: linear-gradient(#fff, skyblue); }\n\nh1 {\n  color: #aaa; }\n\n.container,\n.sub-container {\n  height: 100%;\n  padding-bottom: 50px; }\n\n.modal-wrapper {\n  position: absolute; }\n\n.delete-btn {\n  margin-right: 10px; }\n", ""]);
 
 	// exports
 

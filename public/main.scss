@@ -1,5 +1,5 @@
 html {
-  height: 100%;
+  min-height: 100%;
 }
 body {
   height: 100%;
@@ -13,12 +13,11 @@ h1 {
 .container,
 .sub-container {
   height: 100%;
+  padding-bottom: 50px;
 }
 
 .modal-wrapper {
   position: absolute;
-/*  height: 100%;
-  width: 100%;*/
 }
 
 .delete-btn {

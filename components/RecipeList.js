@@ -16,7 +16,6 @@ class RecipeList extends Component{
   }
 
   editRecipe(id) {
-    // console.log('id', id);
     this.props._modifyRecipe(id);
   }
 

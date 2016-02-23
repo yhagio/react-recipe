@@ -6,6 +6,21 @@ import EditRecipeForm from './EditRecipeForm';
 
 require('../public/main.scss');
 
+let recipeArray = [];
+
+let sample = {
+  title: 'Oyakodon',
+  ingredients: ['Onions', 'Soy Sauce', 'Eggs', 'Chicken', 'Sugar', 'Sake', 'Rice']
+};
+
+let sample2 = {
+  title: 'Katsudon',
+  ingredients: ['Onions', 'Soy Sauce', 'Eggs', 'Pork', 'Sake', 'Mirin', 'Rice']
+};
+
+recipeArray.push(sample);
+recipeArray.push(sample2);
+
 class App extends Component{
   constructor(props) {
     super(props);
@@ -13,7 +28,7 @@ class App extends Component{
       modalOpen: props.opened,
       editModalOpen: props.editOpened,
       buttonText: 'ADD RECIPE',
-      recipes: [],
+      recipes: recipeArray,
       editingData: '',
       editingIndex: ''
     };
@@ -39,6 +54,7 @@ class App extends Component{
     this.setState({
       recipes: allRecipes
     });
+    localStorage.setItem('recipes', JSON.stringify(recipe));
   }
 
   deleteRecipe(index) {
@@ -48,16 +64,13 @@ class App extends Component{
   }
 
   editRecipe(index) {
-    // console.log('edit', index, this.state.recipes[index]);
     let editingData = this.state.recipes[index];
-    // console.log(editingData);
 
     this.setState({
       editingIndex: index,
       editingData: editingData
     });
 
-    // console.log('Set EditingD', this.state.editingData);
     const state = this.state.editModalOpen;
     this.setState({editModalOpen: !state});
   }
@@ -84,7 +97,6 @@ class App extends Component{
   render(){
     let editForm = '';
     if (this.state.editingData !== '') {
-      // console.log('DATA', this.state.editingData);
       editForm = <EditRecipeForm
           show={this.state.editModalOpen}
           onClose={this.closeEditModal.bind(this)}
@@ -96,7 +108,6 @@ class App extends Component{
 
     return (
       <div className="sub-container">
-        <button className="btn btn-info" onClick={this.toggleModal.bind(this)}>{this.state.buttonText}</button>
         <AddRecipeForm
           show={this.state.modalOpen}
           onClose={this.toggleModal.bind(this)}
@@ -106,10 +117,14 @@ class App extends Component{
         {editForm}
 
         <h1>Recipe Book</h1>
-        <RecipeList 
-          recipes={this.state.recipes}
-          _removeRecipe={this.deleteRecipe.bind(this)}
-          _modifyRecipe={this.editRecipe.bind(this)} />
+        <div className="well">
+          <RecipeList 
+            recipes={this.state.recipes}
+            _removeRecipe={this.deleteRecipe.bind(this)}
+            _modifyRecipe={this.editRecipe.bind(this)} />
+        </div>
+        <button className="btn btn-info" onClick={this.toggleModal.bind(this)}>{this.state.buttonText}</button>
+
       </div>
     )
   }

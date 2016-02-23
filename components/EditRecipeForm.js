@@ -34,9 +34,6 @@ class EditRecipeForm extends Component {
       ingredients: ingredientsArray
     };
 
-    console.log('recipeObject:', recipeObject);
-    debugger;
-
     this.props._handleEditRecipe(this.props.index, recipeObject);
 
     this.props.onClose.bind(this);
